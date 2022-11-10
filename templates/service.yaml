@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: surrealdb
+  name: surrealdb
+spec:
+  ports:
+    - name: "surreal-rpc"
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: surrealdb

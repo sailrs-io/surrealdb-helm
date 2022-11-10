@@ -1,0 +1,39 @@
+# Configure the image
+# @param registry defaults to docker.io
+# @param repository defaults to surrealdb/surrealdb
+# @param tag if set to "latest" pullPolicy is set to "Always"
+# @param pullPolicy "IfNotPresent" but note the above
+image: {}
+
+username: root
+password: root
+
+# corresponds to the DB_PATH setting in surreal, so set it
+# - to "memory" for in in-memory use (for testing ?)
+# - some path under "file:/data" (where the volume is mounted)
+# - tkiv... (coming soon)
+# 
+# This value is set to "file:/data" when you enable persistence
+database: memory
+
+replicas: 1
+
+# configure affinity
+affinity: {}
+
+# configure resource requests and limits
+resources: {}
+
+# enable persistence. Defaults to emtyDir if you don't specify
+# a persitentVolumeClaim.
+# @param enabled true or false
+# @param existingClaim an existing persitentVolumeClaim
+persistence: {}
+
+tikv:
+  enabeld: true
+  name: surreal-tikv
+  replicas:
+    tidb:
+      pd: 3
+      tikv: 3

@@ -1,0 +1,10 @@
+apiVersion: v2
+name: surrealdb
+description: SurrealDB is the ultimate cloud database for tomorrow's applications
+appVersion: "1.0.0-beta.8"
+engine: gotpl
+version: 0.1.1
+# dependencies:
+# - repository: https://charts.pingcap.org/
+#   name: tidb
+#   version: v1.3.9
