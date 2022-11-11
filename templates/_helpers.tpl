@@ -23,7 +23,7 @@ Renders the imagePullPolicy which is set to Always if image tag is latest
 {{- end -}}
 
 {{- define "surrealdb.database" -}}
-{{- if .Values.persistence.enabled -}}
+{{- if .Values.pod.persistence.enabled -}}
 {{- printf "%s" "file:/data" -}}
 {{- else -}}
 {{ default "memory" .Values.database }}

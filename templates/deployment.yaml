@@ -11,47 +11,50 @@ metadata:
   annotations: {{- toYaml .Values.commonAnnotations | nindent 4 }}
   {{- end }}
 spec:
-  replicas: {{ .Values.replicas | default 1 }}
+  replicas: {{ .Values.pod.replicas | default 1 }}
   selector:
     matchLabels:
-      app: surrealdb
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: surrealdb
-        {{- if .Values.podLabels }}
-        {{- toYaml .Values.podLabels  }}
-        {{- end }}
-      {{- if .Values.podAnnotations }}
-      annotations: {{ toYaml .Values.podAnnotations | nindent 8 }}
+        app: {{ .Release.Name }}
+        {{- if .Values.pod.labels }}
+        {{ toYaml .Values.pod.labels  }}
+        {{- end -}}
+      {{- if .Values.pod.annotations }}
+      annotations: {{ toYaml .Values.pod.annotations | nindent 8 }}
       {{- end }}
     spec:
-      {{- if .Values.affinity }}
-      affinity: {{- toYaml .Values.affinity | nindent 8 }}
+      {{- if .Values.pod.affinity }}
+      affinity: {{- toYaml .Values.pod.affinity | nindent 8 }}
       {{- end }}
-      {{- if .Values.tolerations }}
-      tolerations: {{- toYaml .Values.tolerations | nindent 8 }}
+      {{- if .Values.pod.tolerations }}
+      tolerations: {{- toYaml .Values.pod.tolerations | nindent 8 }}
       {{- end }}
       containers:
         - name: surrealdb
           image: {{ include "surrealdb.image" . }}
           imagePullPolicy: {{ include "surrealdb.imagePullPolicy" . }}
           args:
-            - start
+          - start
           env:
-            - name: DB_PATH
-              value: {{ include "surrealdb.database" . | quote }}
-            - name: USER
-              value: {{ include "surrealdb.username" . | quote }}
-            - name: PASS
-              value: {{ include "surrealdb.password" . | quote }}
-            - name: LOG
-              value: {{ include "surrealdb.loglevel" . | quote }}
+          - name: DB_PATH
+            value: {{ include "surrealdb.database" . }}
+          - name: USER
+            value: {{ include "surrealdb.username" . }}
+          - name: PASS
+            value: {{ include "surrealdb.password" . }}
+          - name: LOG
+            value: {{ include "surrealdb.loglevel" . }}
+          {{- if .Values.pod.env }}
+          {{- toYaml .Values.pod.env | nindent 10 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 8000
-          {{- if .Values.resources }}
-          resources: {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.pod.resources }}
+          resources: {{- toYaml .Values.pod.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
             - mountPath: /data
@@ -74,9 +77,9 @@ spec:
             periodSeconds: 5
       volumes:
         - name: surreal-data
-          {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
+          {{- if and .Values.pod.persistence.enabled .Values.pod.persistence.existingClaim }}
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim }}
+            claimName: {{ .Values.pod.persistence.existingClaim }}
           {{- else }}
           emptyDir: {}
           {{- end }}

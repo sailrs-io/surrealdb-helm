@@ -3,7 +3,8 @@ name: surrealdb
 description: SurrealDB is the ultimate cloud database for tomorrow's applications
 appVersion: "1.0.0-beta.8"
 engine: gotpl
-version: 0.1.1
+version: 0.1.2
+icon: https://surrealdb.com/static/img/assets/icon/icon-3fccfc517c1fa85d61441f736f7bb6ac.svg
 # dependencies:
 # - repository: https://charts.pingcap.org/
 #   name: tidb

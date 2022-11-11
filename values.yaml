@@ -16,19 +16,35 @@ password: root
 # This value is set to "file:/data" when you enable persistence
 database: memory
 
-replicas: 1
+pod:
+  replicas: 1
 
-# configure affinity
-affinity: {}
+  # configure affinity
+  affinity: {}
 
-# configure resource requests and limits
-resources: {}
+  # configure tolerations
+  tolerations: {}
 
-# enable persistence. Defaults to emtyDir if you don't specify
-# a persitentVolumeClaim.
-# @param enabled true or false
-# @param existingClaim an existing persitentVolumeClaim
-persistence: {}
+  # configure resource requests and limits
+  resources:
+    requests:
+      cpu: 150m
+      memory: 128Mi
+
+  # configure labels
+  labels: {}
+
+  # configure annotations
+  annotations: {}
+
+  # configure env
+  env: []
+
+  # enable persistence. Defaults to emtyDir if you don't specify
+  # a persitentVolumeClaim.
+  # @param enabled true or false
+  # @param existingClaim an existing persitentVolumeClaim
+  persistence: {}
 
 tikv:
   enabeld: true
