@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: surrealdb
+  name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
   {{- if .Values.commonLabels }}
   labels: {{- toYaml .Values.commonLabels | nindent 4 }}
