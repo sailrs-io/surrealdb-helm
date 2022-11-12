@@ -51,7 +51,7 @@ spec:
           {{- toYaml .Values.pod.env | nindent 10 }}
           {{- end }}
           ports:
-            - name: http
+            - name: app
               containerPort: 8000
           {{- if .Values.pod.resources }}
           resources: {{- toYaml .Values.pod.resources | nindent 12 }}
@@ -62,17 +62,17 @@ spec:
               # subPath: data
           startupProbe:
             tcpSocket:
-              port: http
+              port: app
             failureThreshold: 20
             initialDelaySeconds: 3
           readinessProbe:
             tcpSocket:
-              port: http
+              port: app
             initialDelaySeconds: 5
             periodSeconds: 5
           livenessProbe:
             tcpSocket:
-              port: http
+              port: app
             initialDelaySeconds: 5
             periodSeconds: 5
       volumes:
