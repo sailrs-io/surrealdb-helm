@@ -12,7 +12,6 @@ password: root
 # - to "memory" for in in-memory use (for testing ?)
 # - some path under "file:/data" (where the volume is mounted)
 # - tkiv... (coming soon)
-# 
 # This value is set to "file:/data" when you enable persistence
 database: memory
 
